@@ -1,6 +1,7 @@
 package sprite
 
 import(
+	"fmt"
 	"time"
 	"bytes"
 	"image"
@@ -62,6 +63,11 @@ func AllFramesCycle(sprite *Sprite) *Cycle {
 
 //Utils
 func (c *Cycle) getCycleFrames(frames [][]byte, start int, end int) [][]byte {
+	total := len(frames) - 1
+	if start > total || end > total {
+		fmt.Println("cycle.go - Out of bounds index in start or end frame")
+	}
+
 	var cycleFrames [][]byte
 	for i := start; i < end; i++ {
 		cycleFrames = append(cycleFrames, frames[i])
