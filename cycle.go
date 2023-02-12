@@ -50,7 +50,7 @@ func AllFramesCycle(sprite *Sprite) *Cycle {
 	
 	cycle.Name = "All"
 	cycle.Index = 0
-	cycle.frames = cycle.getCycleFrames(sprite.Frames, 0, len(sprite.Frames))
+	cycle.frames = cycle.getCycleFrames(sprite.Frames, 0, len(sprite.Frames) - 1)
 	cycle.total = len(cycle.frames)
 	cycle.Speed = 1
 	cycle.Loop = true
@@ -59,7 +59,7 @@ func AllFramesCycle(sprite *Sprite) *Cycle {
 	cycle.stopPlaying  = make(chan bool, 10)
 	
 	return cycle
-}
+} //Name will be All
 
 //Utils
 func (c *Cycle) getCycleFrames(frames [][]byte, start int, end int) [][]byte {
