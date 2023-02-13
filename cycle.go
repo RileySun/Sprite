@@ -17,6 +17,7 @@ type Cycle struct {
 	Reverse bool
 	Loop bool
 	Mirror bool
+	OnCycleEnd func()
 	
 	//pvt
 	sprite *Sprite
@@ -63,9 +64,10 @@ func AllFramesCycle(sprite *Sprite) *Cycle {
 
 //Utils
 func (c *Cycle) getCycleFrames(frames [][]byte, start int, end int) [][]byte {
-	total := len(frames) - 1
+	total := len(frames)
 	if start > total || end > total {
 		fmt.Println("cycle.go - Out of bounds index in start or end frame")
+		fmt.Println(start, end, total)
 	}
 
 	var cycleFrames [][]byte
@@ -129,7 +131,6 @@ func (c *Cycle) Play() {
 func (c *Cycle) Stop() {
 	c.stopPlaying <- true
 	c.playing = false
-	c.Index = 0
 	c.RefreshFrame()
 }
 
@@ -140,6 +141,9 @@ func (c *Cycle) Next() {
 		//If looping continue loop, else stop playing
 		if c.Loop {
 			c.Index = 0
+		} else {
+			c.OnCycleEnd()
+			return
 		}
 	}
 	c.RefreshFrame()
