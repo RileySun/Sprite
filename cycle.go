@@ -107,10 +107,9 @@ func (c *Cycle) IsPlaying() bool {
 	return c.playing
 }
 
-func (c *Cycle) OnEnd() {
-	c.Index = 0
-	
+func (c *Cycle) OnEnd() {	
 	if c.OnCycleEnd != nil {
+		c.Index = 0
 		c.OnCycleEnd()
 	}
 }
