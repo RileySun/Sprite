@@ -167,3 +167,10 @@ func (c *Cycle) Prev() {
 	}
 	c.RefreshFrame()
 }
+
+func (c *Cycle) Set(index int) {
+	if index < c.total - 1 {
+		c.Index = index
+		c.RefreshFrame()
+	}
+}
