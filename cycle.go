@@ -107,6 +107,13 @@ func (c *Cycle) IsPlaying() bool {
 	return c.playing
 }
 
+func (c *Cycle) OnEnd() {
+	c.Index = 0
+	
+	if c.OnCycleEnd != nil {
+		c.OnCycleEnd()
+	}
+}
 
 //Actions
 func (c *Cycle) Play() {
@@ -142,10 +149,7 @@ func (c *Cycle) Next() {
 		if c.Loop {
 			c.Index = 0
 		} else {
-			if c.OnCycleEnd != nil {
-				c.OnCycleEnd()
-				return
-			}
+			c.OnEnd()
 		}
 	}
 	c.RefreshFrame()
@@ -159,10 +163,7 @@ func (c *Cycle) Prev() {
 		if c.Loop {
 			c.Index = c.total - 1
 		} else {
-			if c.OnCycleEnd != nil {
-				c.OnCycleEnd()
-				return
-			}
+			c.OnEnd()
 		}
 	}
 	c.RefreshFrame()
