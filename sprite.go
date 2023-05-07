@@ -128,7 +128,11 @@ func (s *Sprite) SetCycle(name string) {
 		fmt.Println("sprite.go - No such cycle exists, add cycle to use")
 	} else {
 		s.Cycle = newCycle
-		s.Image = s.Cycle.frames[0]
+		if newCycle.Reverse {
+			s.Image = s.Cycle.frames[len(s.Cycle.frames) - 1]
+		} else {
+			s.Image = s.Cycle.frames[0]
+		}
 	}
 }
 
