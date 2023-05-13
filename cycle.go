@@ -123,12 +123,16 @@ func (c *Cycle) Play() {
 				case <- c.stopPlaying:
 					return
 				default:
-					if c.Reverse {
-						c.Prev()
+					if c.Speed != 0 {
+						if c.Reverse {
+							c.Prev()
+						} else {
+							c.Next()
+						}
+						time.Sleep(time.Second / time.Duration(c.Speed))
 					} else {
-						c.Next()
+						time.Sleep(time.Second)
 					}
-					time.Sleep(time.Second / time.Duration(c.Speed))
 	   		 }
 		}
 	}()
