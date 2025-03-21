@@ -121,6 +121,18 @@ func (s *Sprite) AddCycle(cycle *Cycle) {
 	}
 }
 
+func (s *Sprite) AddCycles(cycles ...*Cycle) {
+	for _, c := range cycles {
+		test := s.getCycle(c.Name)
+	
+		if test != nil {
+			fmt.Println("sprite.go - Duplicate Cycle Attempt, Can Not Re-Use Cycle Names")
+		} else {
+			s.Cycles = append(s.Cycles, c)
+		}
+	}
+}
+
 func (s *Sprite) SetCycle(name string) {
 	newCycle := s.getCycle(name)
 	
