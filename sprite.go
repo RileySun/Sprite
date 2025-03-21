@@ -1,8 +1,11 @@
 package sprite
 
 import(
+	"log"
 	"fmt"
 	"bytes"
+	"strconv"
+	"errors"
 	"image"
 	"image/png"
 	
@@ -49,11 +52,21 @@ func NewSprite(spriteSheet []byte, frameTotal int, rows int, columns int, frameW
 func (s *Sprite) getFrames() [][]byte {
 	var frames [][]byte
 	
+	//Load Image
 	reader := bytes.NewReader(s.Sheet)
-	img, _, _ := image.Decode(reader) //image, ext, err
+	img, _, err := image.Decode(reader) //image, ext, err
+	if err != nil {
+		log.Println(err)
+	}
 	
+	//Validate
+	valErr := s.Validate(img)
+	if valErr != nil {
+		log.Fatal(valErr)
+	}
+	
+	//Get Frames
 	var total, i, j int = 0, 0, 0
-	
 	for i = 0; i < s.Rows; i++ {
 		//In case not all tiles are filled in
 		if total > s.Total {
@@ -84,6 +97,30 @@ func (s *Sprite) getCycle(name string) *Cycle {
 			return cycle
 		}
 	}
+	return nil
+}
+
+func (s *Sprite) Validate(img image.Image) error {
+	
+	w, h := img.Bounds().Max.X, img.Bounds().Max.Y
+	frameW, frameH := strconv.Itoa(s.width), strconv.Itoa(s.height)
+	
+	//Check row/col accuracy
+	if s.width * s.Cols > w {
+		return errors.New("Sprite.go - Incorrect amount of Columns. At frame width " + frameW + " the maximum columns are " + strconv.Itoa(w/s.width))
+	}
+	if s.height * s.Rows > h {
+		return errors.New("Sprite.go - Incorrect amount of Rows. At frame height " + frameH + " the maximum rows are " + strconv.Itoa(h/s.height))
+	}
+	
+	//Check frameWidth/frameHeight accurracy
+	if s.width * s.Cols > w {
+		return errors.New("Incorrect frame width. With " + strconv.Itoa(s.Cols) + " rows maximum frame height is" + strconv.Itoa(w/s.Cols))
+	}
+	if s.height * s.Rows > h {
+		return errors.New("Incorrect frame height. With " + strconv.Itoa(s.Rows) + " rows maximum frame height is" + strconv.Itoa(h/s.Rows))
+	}
+	
 	return nil
 }
 

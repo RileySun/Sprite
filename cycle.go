@@ -1,6 +1,7 @@
 package sprite
 
 import(
+	"log"
 	"fmt"
 	"time"
 	"bytes"
@@ -87,7 +88,11 @@ func (c *Cycle) getCycleMirrors() [][]byte {
 }
 
 func (c *Cycle) getMirror(frame []byte) []byte {
-	newImage, _, _ := image.Decode(bytes.NewReader(frame))
+	newImage, _, err := image.Decode(bytes.NewReader(frame))
+	if err != nil {
+		log.Fatal(err)
+	}
+	
 	flipped := imaging.FlipH(newImage)
 	
 	buf := new(bytes.Buffer)
