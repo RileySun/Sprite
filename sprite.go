@@ -2,7 +2,6 @@ package sprite
 
 import(
 	"log"
-	"fmt"
 	"bytes"
 	"strconv"
 	"errors"
@@ -140,6 +139,14 @@ func (s *Sprite) SetImage(newImage []byte) {
 	}
 }
 
+func (s *Sprite) SetFrame(index int) {
+	if index > len(s.Frames) {
+		log.Println("Invalid sprite frame index, max index is " + strconv.Itoa(len(s.Frames)))
+	}
+	s.Stop()
+	s.Image = s.Frames[index]
+}
+
 func (s *Sprite) ListCycles() []string {
 	var list []string
 	for _, cycle := range s.Cycles {
@@ -152,7 +159,7 @@ func (s *Sprite) AddCycle(cycle *Cycle) {
 	test := s.getCycle(cycle.Name)
 	
 	if test != nil {
-		fmt.Println("sprite.go - Duplicate Cycle Attempt, Can Not Re-Use Cycle Names")
+		log.Println("sprite.go - Duplicate Cycle Attempt, Can Not Re-Use Cycle Names")
 	} else {
 		s.Cycles = append(s.Cycles, cycle)
 	}
@@ -163,7 +170,7 @@ func (s *Sprite) AddCycles(cycles ...*Cycle) {
 		test := s.getCycle(c.Name)
 	
 		if test != nil {
-			fmt.Println("sprite.go - Duplicate Cycle Attempt, Can Not Re-Use Cycle Names")
+			log.Println("sprite.go - Duplicate Cycle Attempt, Can Not Re-Use Cycle Names")
 		} else {
 			s.Cycles = append(s.Cycles, c)
 		}
@@ -174,7 +181,7 @@ func (s *Sprite) SetCycle(name string) {
 	newCycle := s.getCycle(name)
 	
 	if newCycle == nil {
-		fmt.Println("sprite.go - No such cycle exists, add cycle to use")
+		log.Println("sprite.go - No such cycle exists, add cycle to use")
 	} else {
 		s.Cycle = newCycle
 		if newCycle.Reverse {
