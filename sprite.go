@@ -201,7 +201,7 @@ func (s *Sprite) Play() {
 }
 
 func (s *Sprite) Stop() {
-	if s.Cycle == nil {
+	if !s.Cycle.IsPlaying() && s.Cycle == nil {
 		return
 	} else {
 		s.Cycle.Stop()

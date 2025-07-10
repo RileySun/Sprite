@@ -52,7 +52,7 @@ func AllFramesCycle(sprite *Sprite) *Cycle {
 	
 	cycle.Name = "All"
 	cycle.Index = 0
-	cycle.frames = cycle.getCycleFrames(sprite.Frames, 0, len(sprite.Frames) - 1)
+	cycle.frames = cycle.getCycleFrames(sprite.Frames, 0, len(sprite.Frames))
 	cycle.total = len(cycle.frames)
 	cycle.Speed = 1
 	cycle.Loop = true
@@ -117,6 +117,10 @@ func (c *Cycle) OnEnd() {
 		c.Index = 0
 		c.OnCycleEnd()
 	}
+}
+
+func (c *Cycle) FrameCount() int {
+	return c.total
 }
 
 //Actions
