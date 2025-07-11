@@ -104,20 +104,20 @@ func (s *Sprite) Validate(img image.Image) error {
 	w, h := img.Bounds().Max.X, img.Bounds().Max.Y
 	frameW, frameH := strconv.Itoa(s.width), strconv.Itoa(s.height)
 	
-	//Check row/col accuracy
-	if s.width * s.Cols > w {
-		return errors.New("Sprite.go - Incorrect amount of Columns. At frame width " + frameW + " the maximum columns are " + strconv.Itoa(w/s.width))
-	}
-	if s.height * s.Rows > h {
-		return errors.New("Sprite.go - Incorrect amount of Rows. At frame height " + frameH + " the maximum rows are " + strconv.Itoa(h/s.height))
-	}
-	
 	//Check frameWidth/frameHeight accurracy
 	if s.width * s.Cols > w {
 		return errors.New("Incorrect frame width. With " + strconv.Itoa(s.Cols) + " rows maximum frame height is" + strconv.Itoa(w/s.Cols))
 	}
 	if s.height * s.Rows > h {
 		return errors.New("Incorrect frame height. With " + strconv.Itoa(s.Rows) + " rows maximum frame height is" + strconv.Itoa(h/s.Rows))
+	}
+	
+	//Check row/col accuracy
+	if s.width * s.Cols > w {
+		return errors.New("Sprite.go - Incorrect amount of Columns. At frame width " + frameW + " the maximum columns are " + strconv.Itoa(w/s.width))
+	}
+	if s.height * s.Rows > h {
+		return errors.New("Sprite.go - Incorrect amount of Rows. At frame height " + frameH + " the maximum rows are " + strconv.Itoa(h/s.height))
 	}
 	
 	return nil
@@ -193,7 +193,7 @@ func (s *Sprite) SetCycle(name string) {
 }
 
 func (s *Sprite) Play() {
-	if s.Cycle == nil {
+	if s.Cycle == nil || s.Cycle.IsPlaying() {
 		return
 	} else {
 		s.Cycle.Play()
@@ -201,7 +201,7 @@ func (s *Sprite) Play() {
 }
 
 func (s *Sprite) Stop() {
-	if !s.Cycle.IsPlaying() && s.Cycle == nil {
+	if !s.Cycle.IsPlaying() || s.Cycle == nil {
 		return
 	} else {
 		s.Cycle.Stop()
