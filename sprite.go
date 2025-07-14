@@ -192,6 +192,10 @@ func (s *Sprite) SetCycle(name string) {
 	}
 }
 
+func (s *Sprite) SetSpeed(newSpeed int) {
+	s.Cycle.Speed = newSpeed
+}
+
 func (s *Sprite) Play() {
 	if s.Cycle == nil || s.Cycle.IsPlaying() {
 		return

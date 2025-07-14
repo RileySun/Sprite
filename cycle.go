@@ -13,17 +13,13 @@ import(
 //Types
 type Cycle struct {
 	Name string
-	Index int
-	Speed int
-	Reverse bool
-	Loop bool
-	Mirror bool
+	Index, Speed int
+	Reverse, Loop, Mirror bool
 	OnCycleEnd func()
 	
 	//pvt
 	sprite *Sprite
-	frames [][]byte
-	mirrors [][]byte
+	frames, mirrors [][]byte
 	total int
 	playing bool
 	stopPlaying chan bool
