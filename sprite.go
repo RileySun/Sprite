@@ -211,3 +211,11 @@ func (s *Sprite) Stop() {
 		s.Cycle.Stop()
 	}
 }
+
+func (s *Sprite) IsPlaying() bool {
+	if s.Cycle != nil {
+		return s.Cycle.IsPlaying()
+	} else {
+		return false
+	}
+}
