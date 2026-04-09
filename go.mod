@@ -1,6 +1,6 @@
 module github.com/RileySun/Sprite
 
-go 1.19
+go 1.26.1
 
 require (
 	github.com/disintegration/imaging v1.6.2

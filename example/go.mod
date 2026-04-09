@@ -1,6 +1,6 @@
 module github.com/RileySun/Sprite/example
 
-go 1.19
+go 1.26.1
 
 replace github.com/RileySun/Sprite => ../
 
