@@ -158,6 +158,7 @@ func (c *Cycle) Next() {
 			c.Index = 0
 		} else {
 			c.OnEnd()
+			c.Stop()
 		}
 	}
 	c.RefreshFrame()
@@ -172,6 +173,7 @@ func (c *Cycle) Prev() {
 			c.Index = c.total - 1
 		} else {
 			c.OnEnd()
+			c.Stop()
 		}
 	}
 	c.RefreshFrame()
